@@ -223,31 +223,30 @@ class JanelaCadastraCliente extends JInternalFrame {
     super("Insere na tabela Cliente", true, true, false, true); //resizable, closable, maximizable, iconifiable
     desktop = d;
     try {
-      //pStmt = con.prepareStatement("INSERT INTO CLIENTES VALUES (?, ?, ?, ?)");
 	  pStmt = con.prepareStatement("INSERT INTO CLIENTES VALUES (?, T_PESSOA (?, ?, ?), T_ENDERECO(?, ?, ?, ?, ?))");
 
       setLayout(new FlowLayout());
       add(new JLabel("CPF: "));
-      add(cpf = new JTextField(12));
+      add(cpf = new JTextField(11));
       add(new JLabel("Nome: "));
       add(nome = new JTextField(20));
 	  add(new JLabel("Telefone: "));
-      add(tel = new JTextField(10));
+      add(tel = new JTextField(12));
 	  add(new JLabel("E-mail: "));
-      add(email = new JTextField(12));
+      add(email = new JTextField(20));
       add(new JLabel("Rua: "));
       add(rua = new JTextField(20));
-	  add(new JLabel("Número: "));
-      add(numero = new JTextField(20));
+	  add(new JLabel("Numero: "));
+      add(numero = new JTextField(10));
 	  add(new JLabel("Cidade: "));
-      add(cidade = new JTextField(20));
-	  add(new JLabel("UF: "));
-      add(uf = new JTextField(20));
+      add(cidade = new JTextField(25));
+	  add(new JLabel("Estado (UF): "));
+      add(uf = new JTextField(5));
 	  add(new JLabel("CEP: "));
-      add(cep = new JTextField(20));
+      add(cep = new JTextField(10));
       
       add(bt1 = new JButton("Insere"));
-      setPreferredSize(new Dimension(600, 300));
+      setPreferredSize(new Dimension(500, 200));
       pack();
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setVisible(true);
@@ -256,9 +255,9 @@ class JanelaCadastraCliente extends JInternalFrame {
       bt1.addActionListener(new ActionListener() {    //classe interna listener sem nome
         public void actionPerformed(ActionEvent e) {
           try {
-            pStmt.setInt(1, Integer.parseInt(cpf.getText()));
+            pStmt.setLong(1, Long.parseLong(cpf.getText()));
             pStmt.setString(2, nome.getText());
-			pStmt.setInt(3, Integer.parseInt(tel.getText()));
+			pStmt.setLong(3, Long.parseLong(tel.getText()));
 			pStmt.setString(4, email.getText());
 			pStmt.setString(5, rua.getText());
 			pStmt.setInt(6, Integer.parseInt(numero.getText()));
@@ -591,7 +590,7 @@ class JanelaConsultaC extends JInternalFrame implements ActionListener {
     super("Consulta na tabela Cliente", false, true, false, true); //resizable, closable, maximizable, iconifiable
     desktop = d;
     try {
-      pStmt = con.prepareStatement("SELECT * FROM CLIENTE WHERE CPF = ?");
+      pStmt = con.prepareStatement("SELECT * FROM CLIENTES c WHERE c.CPF = ?");
 
       JPanel l1 = new JPanel();
       l1.add(new JLabel("CPF: "));
